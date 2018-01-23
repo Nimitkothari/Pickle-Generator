@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>csv to Pickle file generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<h3>Train Data Range</h3>
+
+<div class="slidecontainer">
+  <input type="range" min="1" max="100" value="50" class="slider" id="trainValue">
+  <p>Value: <span id="demo"></span></p>
+</div>
+
+<div>
+<h3></h3>
+<select class="algo" style="padding: 0.5%" id="algorithm">
+  <option value="Select">Select</option>
+  <option value="Classifier">Classifier</option>
+  <option value="Cluster">Cluster</option>
+  <option value="Linear">Linear</option>
+</select>
+</div>
+<br><br>
+<form id="form">
+<div>
+    <button id="trainData" style="padding: 3.4px 30px;" onclick="train()" type="button" class="button">Train</button><br>
+</div>
+</form>
+<br><br>
+<form>
+  <div>
+    <h3 style="color:royalblue">Download Pickle files</h3><br>
+<label class="container">Download Pickle One
+  <input id="pickleOne" type="checkbox" name="pickles" value="1"/>
+  <span class="checkmark"></span>
+</label>
+<label class="container">Download Pickle Two
+  <input id="pickleTwo" type="checkbox" name="pickles" value="2"/>
+  <span class="checkmark"></span>
+</label>
+<label class="container">Download Pickle Three
+  <input id="pickleThree" type="checkbox" name="pickles" value="3"/>
+  <span class="checkmark"></span>
+</label>
+<label class="container">Download Pickle Four
+  <input id="pickleFour" type="checkbox" name="pickles" value="4"/>
+  <span class="checkmark"></span>
+</label>
+<label class="container">Download Pickle Five
+  <input id="pickleFive" type="checkbox" name="pickles" value="5"/>
+  <span class="checkmark"></span>
+</label>
+<br><br>
+    <button id="pickleDownload" style="padding: 3.4px 30px; float:left;" onclick="DownloadPickle()" type="button" class="button">Download</button>
+    <!--<button id="pickle2" style="padding: 3.4px 30px; float:left;" on-click="pickle2" type="button" class="button">Pickle 2</button>
+    <button id="pickle3" style="padding: 3.4px 30px; float:left;" on-click="pickle3" type="button" class="button">Pickle 3</button>
+    <button id="pickle4" style="padding: 3.4px 30px; float:left;" on-click="pickle4" type="button" class="button">Pickle 4</button>
+    <button id="pickle5" style="padding: 3.4px 30px; float:left;" on-click="pickle5" type="button" class="button">Pickle 5</button>-->
+
+</div>
+</form>
+<script type=text/javascript>
+var slider = document.getElementById("trainValue");
+console.log("trainValue",trainValue);
+var output = document.getElementById("demo");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+
+function train() {
+
+    // $trainData = $('#form').val();
+    var inputValue=document.getElementById('trainValue');
+    var dropdown=document.getElementById('algorithm');
+    var algorithmValue = dropdown.options[dropdown.selectedIndex].value;
+    var obj={};
+    obj.trainValue=inputValue;
+    obj.algorithm=algorithmValue;
+        $.ajax({
+            //the url to send the data to
+            url: "http:/127.0.0.1:3000/train",
+            //the data to send to
+            data: JSON.stringify(Obj),
+            //type. for eg: GET, POST
+            type: "POST",
+            //datatype expected to get in reply form server
+            dataType: "json",
+            //on success
+            success: function(data){
+                //do something after something is recieved from php
+            },
+            //on error
+            error: function(){
+                //bad request
+            }
+        });
+}
+
+// pickle file generate
+
+
+function DownloadPickle(){
+
+var pickles = document.getElementsByName("pickles");
+var picklesize = pickles.length;
+var id = 0;
+for(i=0;i<picklesize;i++){
+              if(pickles[i].checked)
+              {
+              id = pickles[i].value;
+              alert(id);
+              $.ajax({
+                  type: 'GET',
+                  url: '/pickleOne',
+                  data:{id :"id"},
+                  contentType: 'application/json',
+                  processData: false,
+                  success:function(data){
+                  alert("oka");
+                  }
+              });
+          }
+}
+}
+
+</script>
+
+</body>
+</html>

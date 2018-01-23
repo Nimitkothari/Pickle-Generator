@@ -1,0 +1,5 @@
+https://machinelearningframeworkv1.run.aws-usw02-pr.ice.predix.io/predict
+{"Size":3400,"Bedrooms":3,"Age":2,"Bathrooms":2,"Price":""}
+https://machinelearningframeworkv1.run.aws-usw02-pr.ice.predix.io/upload
+picklegeneratorfordigitalseer
+https://picklegeneratorfordigitalseer.run.aws-usw02-pr.ice.predix.io/predict
